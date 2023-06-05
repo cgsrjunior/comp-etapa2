@@ -8,9 +8,7 @@
 
 %{
 #include "tokens.h"
-
-int Lines = 1;
-
+#include "parser.tab.h"
 
 int getLineNumber();
 
