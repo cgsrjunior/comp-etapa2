@@ -5,17 +5,15 @@
 #
 # Makefile for single compiler call
 
-etapa2: y.tab.o lex.yy.o  main.o
-	gcc -o etapa2 lex.yy.o y.tab.o main.o -lfl
-main.o: main.c
-	gcc -c main.c
-y.tab.o: y.tab.c
-	gcc -c y.tab.c -Wall
-y.tab.c: parser.y
-	bison -y -d -v parser.y
-lex.yy.o: lex.yy.c
-	gcc -c lex.yy.c
+etapa2: compile_font
+	gcc -o etapa2 lex.yy.o parser.tab.o main.o -lfl
+compile_font: parser.tab.c lex.yy.c
+	gcc -c parser.tab.c lex.yy.c main.c	
+parser.tab.c: parser.y
+	bison -d parser.y
 lex.yy.c: scanner.l
-	flex --header-file=lex.yy.h scanner.l 
+	flex scanner.l
+
+
 clean:
-	rm *.o lex.yy.c lex.yy.h y.tab.c y.tab.h parser.tab.c parser.tab.h etapa2
+	rm *.o lex.yy.c parser.tab.c *.h etapa2
