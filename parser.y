@@ -40,6 +40,34 @@ decl        : list_var decl
             | list_var list_func
             ;
 
+list_func   : func list_func 
+            |
+            ;
+
+func        : header_func body_func
+            ;
+
+header_func : name_func '(' list_param ')' TK_OC_MAP type
+            ;
+
+list_param  : param ',' list_param
+            | param
+            |
+            ;
+
+param       : type ID
+            ;
+
+body_func   : list_cmd
+            ;
+
+list_cmd    : cmd list_cmd
+            |
+            ;
+
+cmd         : expr
+            ;
+
 list_var    : list_var variable_decl
             |
             ;            
