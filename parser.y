@@ -83,6 +83,7 @@ expr        : '-' expr              { $$ = - $1}
             | expr '=' '='  expr	{ $$ = $1 == $3; }
             | expr '!' '='  expr	{ $$ = $1 != $3; }
             | expr '|' '|'  expr	{ $$ = $1 || $3; }
+            | ID
 		    ;
 
 list_var    : list_var variable_decl
