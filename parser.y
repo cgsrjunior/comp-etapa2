@@ -68,10 +68,21 @@ list_cmd    : '{' cmd list_cmd '}'
 cmd         : expr
             ;
 
-expr        : expr '+' expr	    { $$ = $1 + $3; }
-		    | expr '-' expr	    { $$ = $1 - $3; }
-		    | expr '*' expr	    { $$ = $1 * $3; }
-            | expr '/'  expr	{ $$ = $1 / $3; }
+expr        : '-' expr              { $$ = - $1}
+            | '!' expr              { $$ = !$1}
+            | expr '+' expr	        { $$ = $1 + $3; }
+		    | expr '-' expr	        { $$ = $1 - $3; }
+		    | expr '*' expr	        { $$ = $1 * $3; }
+            | expr '/'  expr	    { $$ = $1 / $3; }
+            | expr '%'  expr	    { $$ = $1 % $3; }
+            | expr '<'  expr	    { $$ = $1 < $3; }
+            | expr '>'  expr	    { $$ = $1 > $3; }
+            | expr '%'  expr	    { $$ = $1 % $3; }
+            | expr '<' '='  expr	{ $$ = $1 <= $3; }
+            | expr '>' '='  expr	{ $$ = $1 >= $3; }
+            | expr '=' '='  expr	{ $$ = $1 == $3; }
+            | expr '!' '='  expr	{ $$ = $1 != $3; }
+            | expr '|' '|'  expr	{ $$ = $1 || $3; }
 		    ;
 
 list_var    : list_var variable_decl
