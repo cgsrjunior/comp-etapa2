@@ -29,14 +29,35 @@ void yyerror (char const *s);
 
 %%
 
-
 programa    : list_decl
             ;
         
 list_decl   : decl list_decl
             |
-            ;           
+            ;
 
+decl        : list_var decl
+            | list_var list_func
+            ;
+
+list_var    : list_var variable_decl
+            |
+            ;            
+
+type        : TK_LIT_INT
+            | TK_LIT_FLOAT
+            | tk_lit_bool
+            ;
+
+tk_lit_bool : TK_LIT_TRUE
+            | TK_LIT_FALSE
+            ;
+
+variable_decl : type list_id ';'
+
+list_id       : ID list_id
+              |
+              ;
 
 
 %%
