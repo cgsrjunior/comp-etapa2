@@ -1,3 +1,6 @@
+/* Trabalho de Compiladores - Cleiber Rodrigues e Cintia Valente */
+/* Cartões: 00270139 */
+
 %{
 int yylex(void);
 void yyerror (char const *s);
@@ -26,6 +29,14 @@ void yyerror (char const *s);
 
 %%
 
-programa:
+
+programa    : list_decl
+            ;
+        
+list_decl   : decl list_decl
+            |
+            ;           
+
+
 
 %%
