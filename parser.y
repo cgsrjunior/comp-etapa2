@@ -85,10 +85,39 @@ cmd         : cmd_var
             | cmd_atrib
             | cmd_func_call
             | cmd_return
+            | cmd_flux_ctrl
             ;
+
+cmd_flux_ctrl   : TK_PR_IF '(' expr ')' body
+                | TK_PR_IF '(' expr ')' body TK_PR_ELSE body
+                | TK_PR_WHILE '(' expr ')' body
 
 cmd_func_call: name_func '(' list_arg ')' ';'
              ;
+
+expr        : '-' expr           {$$ = -$1;}
+            | '!' expr              {$$ = !$1;}
+            | expr '*' expr         {$$ = $1 * $3;}
+            | expr '/' expr         {$$ = $1 / $3;}
+            | expr '%' expr         {$$ = $1 % $3;}
+            | expr '+' expr         {$$ = $1 + $3;}
+            | expr '-' expr         {$$ = $1 - $3;}
+            | expr '<' expr         {$$ = $1 < $3;}
+            | expr '>' expr         {$$ = $1 > $3;}
+            | expr TK_OC_LE expr         {$$ = $1 <= $3;}
+            | expr TK_OC_GE expr         {$$ = $1 >= $3;}
+            | expr TK_OC_EQ expr         {$$ = $1 == $3;}
+            | expr TK_OC_NE expr         {$$ = $1 != $3;}
+            | expr TK_OC_AND expr        {$$ = $1 && $3;}
+            | expr TK_OC_OR expr         {$$ = $1 || $3;}
+            | operand
+            ;
+
+operand     : id_label
+            | lit
+            | cmd_func_call
+            ;
+
 
 list_arg    : list_arg ',' expr
             | expr
@@ -114,8 +143,12 @@ id_atrib        : id_label TK_OC_LE lit
                 | id_label
                 ;
 
-lit: TK_LIT_INT;
-expr: TK_LIT_INT;
+lit             : TK_LIT_INT
+                | TK_LIT_FLOAT
+                | TK_LIT_TRUE
+                | TK_LIT_FALSE
+                ;
+
 
 id_label: TK_IDENTIFICADOR;
 name_func: TK_IDENTIFICADOR;

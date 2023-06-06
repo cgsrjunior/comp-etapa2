@@ -10,6 +10,37 @@ faz_algo (int val,float teste,bool ghi) -> int
 
     return 0;
 
-    faz_algo(1,2,3);
+    faz_algo(1, 2.2, true);
+
+    if(2 == 3)
+    {
+        int a <= 1;
+        float b,c,d;
+        bool f,g,h;
+
+        a = 2;
+
+        return 0;
+    }
+
+    if(3 <= 4)
+    {
+        int a <= 1;
+        float b,c,d;
+        bool f,g,h;
+    }
+    else
+    {
+        a = 2;
+        return 0;
+    }
+
+    while(i < 1)
+    {
+        int a <= 1;
+
+        a = a + 1;
+    }
+
 }
 
