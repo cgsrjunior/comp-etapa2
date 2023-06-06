@@ -2,11 +2,13 @@
 /* Cartões: 00270139 */
 
 %{
+#include <stdio.h>
+#include <stdlib.h>
 int yylex(void);
-void yyerror (char const *s);
+int yyerror (const char *message);
 %}
 
-%token ID NUM
+%token CHAR COMMA FLOAT ID INT SEMI
 
 %token TK_PR_INT
 %token TK_PR_FLOAT
@@ -29,83 +31,47 @@ void yyerror (char const *s);
 %token TK_LIT_TRUE
 %token TK_ERRO
 
+
 %%
 
 programa    : list_decl
-            ;
+            | ;
+            ;            
         
-list_decl   : decl list_decl
-            |
+list_decl   :  list_decl decl
+            |  decl
             ;
 
-decl        : list_var decl
-            | list_var list_func
+decl        : list_var list_func ';'
             ;
 
-list_var    : list_var variable_decl
-            |
+list_var    : list_var var
+            | var
             ;
 
-variable_decl : type list_id ';'
-
-type        : TK_LIT_INT
-            | TK_LIT_FLOAT
-            | tk_lit_bool
+var         : type list_id ';'
             ;
 
-tk_lit_bool : TK_LIT_TRUE
-            | TK_LIT_FALSE
+type        : TK_PR_INT
+            | TK_PR_FLOAT
+            | TK_PR_BOOL
             ;
 
-list_id       : ID list_id
-              |
-              ;
-
-list_func   : func list_func 
-            |
+list_func   : list_func func
+            | func
             ;
 
-func        : header_func body_func
+list_id     : list_id ',' id_label
+            | id_label
             ;
 
-header_func : name_func '(' list_param ')' TK_OC_MAP type
-            ;
-
-list_param  : param ',' list_param
-            | param
-            |
-            ;
-
-param       : type ID
-            ;
-
-body_func   : list_cmd
-            ;
-
-list_cmd    : '{' cmd list_cmd '}'
-            |
-            ;
-
-cmd         : expr
-            ;
-
-expr        : '-' expr              { $$ = - $1}
-            | '!' expr              { $$ = !$1}
-            | expr '+' expr	        { $$ = $1 + $3; }
-		    | expr '-' expr	        { $$ = $1 - $3; }
-		    | expr '*' expr	        { $$ = $1 * $3; }
-            | expr '/'  expr	    { $$ = $1 / $3; }
-            | expr '%'  expr	    { $$ = $1 % $3; }
-            | expr '<'  expr	    { $$ = $1 < $3; }
-            | expr '>'  expr	    { $$ = $1 > $3; }
-            | expr '%'  expr	    { $$ = $1 % $3; }
-            | expr '<' '='  expr	{ $$ = $1 <= $3; }
-            | expr '>' '='  expr	{ $$ = $1 >= $3; }
-            | expr '=' '='  expr	{ $$ = $1 == $3; }
-            | expr '!' '='  expr	{ $$ = $1 != $3; }
-            | expr '|' '|'  expr	{ $$ = $1 || $3; }
-            | ID
-		    ;
+id_label: TK_IDENTIFICADOR;
+func: '*';
 
 
 %%
+int yyerror (const char *message)
+{
+    printf("%s\n",message);
+    return 1;
+}

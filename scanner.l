@@ -7,7 +7,6 @@
 %x SINGLE_LINE_COMMENT
 
 %{
-#include "tokens.h"
 #include "parser.tab.h"
 
 int getLineNumber();
