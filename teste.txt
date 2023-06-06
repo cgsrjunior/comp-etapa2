@@ -1,0 +1,15 @@
+int abc, def; float abc, def; bool abc, def;
+
+faz_algo (int val,float teste,bool ghi) -> int
+{
+    int a <= 1;
+    float b,c,d;
+    bool f,g,h;
+
+    a = 2;
+
+    return 0;
+
+    faz_algo(1,2,3);
+}
+

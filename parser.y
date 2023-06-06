@@ -42,7 +42,7 @@ list_decl   :  list_decl decl
             |  decl
             ;
 
-decl        : list_var list_func ';'
+decl        : list_var list_func
             ;
 
 list_var    : list_var var
@@ -57,16 +57,69 @@ type        : TK_PR_INT
             | TK_PR_BOOL
             ;
 
-list_func   : list_func func
-            | func
-            ;
-
 list_id     : list_id ',' id_label
             | id_label
             ;
 
+list_func   : list_func func
+            | func
+            ;
+
+func        : header body
+            ;
+
+header      : name_func '(' list_param ')' TK_OC_MAP type
+
+list_param  : list_param ',' id_param
+            | id_param
+            ;
+
+body        : '{' list_cmd '}'
+            ;
+
+list_cmd    : list_cmd cmd
+            | cmd
+            ;
+
+cmd         : cmd_var
+            | cmd_atrib
+            | cmd_func_call
+            | cmd_return
+            ;
+
+cmd_func_call: name_func '(' list_arg ')' ';'
+             ;
+
+list_arg    : list_arg ',' expr
+            | expr
+            ;
+
+cmd_return  : TK_PR_RETURN expr ';'
+            ;
+
+cmd_atrib   : id_label '=' expr ';'
+            ;
+
+cmd_var     : atrib_var  ';'
+            ;
+
+atrib_var   : type list_id_atrib
+            ;
+
+list_id_atrib   : list_id_atrib ',' id_atrib
+                | id_atrib
+                ;
+
+id_atrib        : id_label TK_OC_LE lit
+                | id_label
+                ;
+
+lit: TK_LIT_INT;
+expr: TK_LIT_INT;
+
 id_label: TK_IDENTIFICADOR;
-func: '*';
+name_func: TK_IDENTIFICADOR;
+id_param: type TK_IDENTIFICADOR;
 
 
 %%
