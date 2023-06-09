@@ -75,6 +75,7 @@ list_param  : list_param ',' id_param
             ;
 
 body        : '{' list_cmd '}'
+            |
             ;
 
 list_cmd    : list_cmd cmd
@@ -187,6 +188,6 @@ id_param: type TK_IDENTIFICADOR;
 %%
 int yyerror (const char *message)
 {
-    printf("Error line %d: %s\n", get_line_number(), message);
+    printf("Error line %d: %s\n %d", get_line_number(), message, TK_ERRO);
     return 1;
 }
