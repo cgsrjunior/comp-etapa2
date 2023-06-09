@@ -1,4 +1,5 @@
-int abc, def; float abc, def; bool abc, def;
+int abc, def, baca, limbo, maca2;
+float abc, def; bool abc, def;
 
 faz_algo (int val,float teste,bool ghi) -> int
 {
@@ -10,9 +11,9 @@ faz_algo (int val,float teste,bool ghi) -> int
 
     return 0;
 
-    faz_algo(1, 2.2, true);
+    faz_algo(func(a,b,c), 2.4, true);
 
-    if(2 == 3)
+    if(a == b)
     {
         int a <= 1;
         float b,c,d;

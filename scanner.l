@@ -1,5 +1,5 @@
 /* Trabalho de Compiladores - Cleiber Rodrigues e Cintia Valente */
-/* Cartões: 00270139 */
+/* Cartões: 00270139 - 00228540 */
 
 %option noyywrap
 %option yylineno

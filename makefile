@@ -1,7 +1,7 @@
 #
 # UFRGS - Compiladores - Etapa 1
 # Cleiber Rodrigues e Cintia Valente
-# Cartões 00270139
+# Cartões 00270139 - 00228540
 #
 # Makefile for single compiler call
 

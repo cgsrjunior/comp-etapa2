@@ -1,14 +1,14 @@
 /* Trabalho de Compiladores - Cleiber Rodrigues e Cintia Valente */
-/* Cartões: 00270139 */
+/* Cartões: 00270139 - 00228540 */
 
 %{
 #include <stdio.h>
 #include <stdlib.h>
 int yylex(void);
 int yyerror (const char *message);
+extern int get_line_number(void);
 %}
-
-%token CHAR COMMA FLOAT ID INT SEMI
+%define parse.error verbose
 
 %token TK_PR_INT
 %token TK_PR_FLOAT
@@ -92,8 +92,12 @@ cmd_flux_ctrl   : TK_PR_IF '(' expr ')' body
                 | TK_PR_IF '(' expr ')' body TK_PR_ELSE body
                 | TK_PR_WHILE '(' expr ')' body
 
+
 cmd_func_call: name_func '(' list_arg ')' ';'
              ;
+
+func_call_param : name_func '(' list_arg ')'
+                ;
 
 expr        : '-' expr           {$$ = -$1;}
             | '!' expr              {$$ = !$1;}
@@ -115,7 +119,7 @@ expr        : '-' expr           {$$ = -$1;}
 
 operand     : id_label
             | lit
-            | cmd_func_call
+            | func_call_param
             ;
 
 
@@ -158,6 +162,6 @@ id_param: type TK_IDENTIFICADOR;
 %%
 int yyerror (const char *message)
 {
-    printf("%s\n",message);
+    printf("Error line %d: %s\n", get_line_number(), message);
     return 1;
 }
