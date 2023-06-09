@@ -99,23 +99,48 @@ cmd_func_call: name_func '(' list_arg ')' ';'
 func_call_param : name_func '(' list_arg ')'
                 ;
 
-expr        : '-' expr           {$$ = -$1;}
-            | '!' expr              {$$ = !$1;}
-            | expr '*' expr         {$$ = $1 * $3;}
-            | expr '/' expr         {$$ = $1 / $3;}
-            | expr '%' expr         {$$ = $1 % $3;}
-            | expr '+' expr         {$$ = $1 + $3;}
-            | expr '-' expr         {$$ = $1 - $3;}
-            | expr '<' expr         {$$ = $1 < $3;}
-            | expr '>' expr         {$$ = $1 > $3;}
-            | expr TK_OC_LE expr         {$$ = $1 <= $3;}
-            | expr TK_OC_GE expr         {$$ = $1 >= $3;}
-            | expr TK_OC_EQ expr         {$$ = $1 == $3;}
-            | expr TK_OC_NE expr         {$$ = $1 != $3;}
-            | expr TK_OC_AND expr        {$$ = $1 && $3;}
-            | expr TK_OC_OR expr         {$$ = $1 || $3;}
+expr        : parenthesis_prec
+            | bin_sev_expr
+            | bin_six_expr
+            | bin_fif_expr
+            | bin_fou_expr
+            | bin_thr_expr
+            | bin_sec_expr
+            | unary_expr            
             | operand
             ;
+
+parenthesis_prec : '(' expr ')'
+                 ;
+
+unary_expr  : '-' expr
+            | '!' expr
+            ;
+
+bin_sec_expr   : expr '*' expr
+               | expr '/' expr
+               | expr '%' expr
+               ;
+
+bin_thr_expr   : expr '+' expr
+               | expr '-' expr
+               ;
+
+bin_fou_expr   : expr '<' expr
+               | expr '>' expr
+               | expr TK_OC_LE expr
+               | expr TK_OC_GE expr
+               ;
+
+bin_fif_expr   : expr TK_OC_EQ expr
+               | expr TK_OC_NE expr
+               ;
+
+bin_six_expr   : expr TK_OC_AND expr
+               ;
+
+bin_sev_expr   : expr TK_OC_OR expr
+               ;
 
 operand     : id_label
             | lit
