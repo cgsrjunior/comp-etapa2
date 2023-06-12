@@ -75,7 +75,9 @@ list_param  : list_param ',' id_param
             | id_param
             ;
 
+
 body        : '{' list_cmd '}'
+            | '{' '}'
             ;
 
 list_cmd    : list_cmd cmd
@@ -104,7 +106,7 @@ unary_operand: '-'
                | '!' 
                ;
 
-bin_sev_expr: '*' | '/' | '%';
+bin_sec_expr: '*' | '/' | '%';
 bin_thr_expr: '+' | '-';
 bin_fou_expr : '<' | '>' | TK_OC_LE  | TK_OC_GE ;
 bin_fif_expr : TK_OC_NE | TK_OC_EQ ;
@@ -116,7 +118,7 @@ expr_1: expr_2 | expr_1 bin_six_expr expr_2;
 expr_2: expr_3 | expr_2 bin_fif_expr expr_3;
 expr_3: expr_4 | expr_3 bin_fou_expr expr_4;
 expr_4: expr_5 | expr_4 bin_thr_expr expr_5;
-expr_5: unary_expr | expr_5 bin_sev_expr unary_expr;
+expr_5: unary_expr | expr_5 bin_sec_expr unary_expr;
 
 unary_expr: parenthesis_prec | unary_operand parenthesis_prec;
 parenthesis_prec    :  operand

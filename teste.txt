@@ -47,3 +47,7 @@ faz_algo (int val,float teste,bool ghi) -> int
 
 }
 
+faz_nada(int valor) -> float
+{
+}
+
