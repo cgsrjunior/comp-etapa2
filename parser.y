@@ -1,3 +1,4 @@
+
 /* Trabalho de Compiladores - Cleiber Rodrigues e Cintia Valente */
 /* Cartões: 00270139 - 00228540 */
 
@@ -99,48 +100,28 @@ cmd_func_call: name_func '(' list_arg ')' ';'
 func_call_param : name_func '(' list_arg ')'
                 ;
 
-expr        : parenthesis_prec
-            | bin_sev_expr
-            | bin_six_expr
-            | bin_fif_expr
-            | bin_fou_expr
-            | bin_thr_expr
-            | bin_sec_expr
-            | unary_expr            
-            | operand
-            ;
-
-parenthesis_prec : '(' expr ')'
-                 ;
-
-unary_expr  : '-' expr
-            | '!' expr
-            ;
-
-bin_sec_expr   : expr '*' expr
-               | expr '/' expr
-               | expr '%' expr
+unary_operand: '-' 
+               | '!' 
                ;
 
-bin_thr_expr   : expr '+' expr
-               | expr '-' expr
-               ;
+bin_sev_expr: '*' | '/' | '%';
+bin_thr_expr: '+' | '-';
+bin_fou_expr : '<' | '>' | TK_OC_LE  | TK_OC_GE ;
+bin_fif_expr : TK_OC_NE | TK_OC_EQ ;
+bin_six_expr: TK_OC_AND ;
+bin_sev_expr: TK_OC_OR ;
 
-bin_fou_expr   : expr '<' expr
-               | expr '>' expr
-               | expr TK_OC_LE expr
-               | expr TK_OC_GE expr
-               ;
+expr: expr_1 | expr bin_sev_expr expr_1;
+expr_1: expr_2 | expr_1 bin_six_expr expr_2;
+expr_2: expr_3 | expr_2 bin_fif_expr expr_3;
+expr_3: expr_4 | expr_3 bin_fou_expr expr_4;
+expr_4: expr_5 | expr_4 bin_thr_expr expr_5;
+expr_5: unary_expr | expr_5 bin_sev_expr unary_expr;
 
-bin_fif_expr   : expr TK_OC_EQ expr
-               | expr TK_OC_NE expr
-               ;
-
-bin_six_expr   : expr TK_OC_AND expr
-               ;
-
-bin_sev_expr   : expr TK_OC_OR expr
-               ;
+unary_expr: parenthesis_prec | unary_operand parenthesis_prec;
+parenthesis_prec    :  operand
+                    | '(' expr ')'
+                    ;
 
 operand     : id_label
             | lit
@@ -178,11 +159,9 @@ lit             : TK_LIT_INT
                 | TK_LIT_FALSE
                 ;
 
-
 id_label: TK_IDENTIFICADOR;
 name_func: TK_IDENTIFICADOR;
 id_param: type TK_IDENTIFICADOR;
-
 
 %%
 int yyerror (const char *message)
