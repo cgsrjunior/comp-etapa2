@@ -73,6 +73,7 @@ header      : name_func '(' list_param ')' TK_OC_MAP type
 
 list_param  : list_param ',' id_param
             | id_param
+            |
             ;
 
 
@@ -102,25 +103,64 @@ cmd_func_call: name_func '(' list_arg ')' ';'
 func_call_param : name_func '(' list_arg ')'
                 ;
 
-unary_operand: '-' 
-               | '!' 
-               ;
+unary_operand : '-' 
+              | '!' 
+              ;
 
-bin_sec_expr: '*' | '/' | '%';
-bin_thr_expr: '+' | '-';
-bin_fou_expr : '<' | '>' | TK_OC_LE  | TK_OC_GE ;
-bin_fif_expr : TK_OC_NE | TK_OC_EQ ;
-bin_six_expr: TK_OC_AND ;
-bin_sev_expr: TK_OC_OR ;
+bin_sec_expr : '*' 
+             | '/' 
+             | '%'
+             ;
 
-expr: expr_1 | expr bin_sev_expr expr_1;
-expr_1: expr_2 | expr_1 bin_six_expr expr_2;
-expr_2: expr_3 | expr_2 bin_fif_expr expr_3;
-expr_3: expr_4 | expr_3 bin_fou_expr expr_4;
-expr_4: expr_5 | expr_4 bin_thr_expr expr_5;
-expr_5: unary_expr | expr_5 bin_sec_expr unary_expr;
+bin_thr_expr : '+' 
+             | '-'
+             ;
 
-unary_expr: parenthesis_prec | unary_operand parenthesis_prec;
+bin_fou_expr : '<' 
+             | '>' 
+             | TK_OC_LE  
+             | TK_OC_GE 
+             ;
+
+bin_fif_expr : TK_OC_NE 
+             | TK_OC_EQ 
+             ;
+
+bin_six_expr: TK_OC_AND 
+             ;
+
+bin_sev_expr: TK_OC_OR
+             ;
+
+expr: expr_1 
+    | expr bin_sev_expr expr_1
+    |
+    ;
+
+expr_1: expr_2 
+      | expr_1 bin_six_expr expr_2
+      ;
+
+expr_2: expr_3 
+      | expr_2 bin_fif_expr expr_3
+      ;
+
+expr_3: expr_4 
+      | expr_3 bin_fou_expr expr_4
+      ;
+
+expr_4: expr_5 
+      | expr_4 bin_thr_expr expr_5
+      ;
+
+expr_5: unary_expr 
+      | expr_5 bin_sec_expr unary_expr
+      ;
+
+unary_expr: parenthesis_prec 
+          | unary_operand parenthesis_prec
+          ;
+
 parenthesis_prec    :  operand
                     | '(' expr ')'
                     ;
@@ -168,6 +208,6 @@ id_param: type TK_IDENTIFICADOR;
 %%
 int yyerror (const char *message)
 {
-    printf("Error line %d: %s\n %d", get_line_number(), message, TK_ERRO);
+    printf("Error line %d: %s\n", get_line_number(), message);
     return 1;
 }
