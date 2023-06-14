@@ -13,8 +13,8 @@ int getLineNumber();
 
 %}
 
-TOKEN_ID      [a-z0-9_]+
-SPECIAL [-,;:!*(\)\[\]\{\}+/<>=%–]
+TOKEN_ID  (?:[a-z]+[0-9]*|_)
+SPECIAL [-,;!*(\)\{\}+/<>=%–]
 CHAR    '[^']'
 STRING  \"[^"\n]*\"
 INT     [0-9]+
