@@ -43,7 +43,8 @@ list_decl   :  list_decl decl
             |  decl
             ;
 
-decl        : list_var list_func
+decl        : list_var 
+            | list_func
             ;
 
 list_var    : list_var var
@@ -73,7 +74,6 @@ header      : name_func '(' list_param ')' TK_OC_MAP type
 
 list_param  : list_param ',' id_param
             | id_param
-            |
             ;
 
 
