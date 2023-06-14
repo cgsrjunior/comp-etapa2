@@ -72,8 +72,6 @@ list_param  : list_param ',' id_param
 body        : '{' list_cmd '}'
             ;
 
-cmd_body        : '{' list_cmd '}'
-            ;
 
 list_cmd    :  cmd ';' list_cmd
             |
@@ -84,7 +82,7 @@ cmd         : cmd_var
             | cmd_func_call
             | cmd_return
             | cmd_flux_ctrl
-            | cmd_body
+            | body
             ;
 
 cmd_flux_ctrl   : TK_PR_IF '(' expr ')' body
@@ -203,6 +201,6 @@ id_param: type TK_IDENTIFICADOR;
 %%
 int yyerror (const char *message)
 {
-    printf("Error line %d: %s\n %d", get_line_number(), message, TK_ERRO);
+    printf("Error line %d: %s\n %d", get_line_number(), message);
     return 1;
 }
